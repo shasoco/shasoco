@@ -17,4 +17,4 @@ if [ _$1 = _version ]; then
     exit 0
 fi
 
-docker run --privileged -v /var/run/docker.sock:/tmp/docker.sock --rm -it -v "$HOME:/root" -v "$(pwd):$(pwd)" -w "$(pwd)" jeko/shasoco:$SHASOCO_VERSION /shasoco/bin/shasoco.js "$@"
+docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -it -v "$HOME:/root" -v "$(pwd):$(pwd)" -w "$(pwd)" jeko/shasoco:$SHASOCO_VERSION /shasoco/bin/shasoco.js "$@"
