@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run --rm -it -v "$(pwd):$(pwd)" -w "$(pwd)" shasoco:lastest /shasoco/bin/shasoco.js "$@"
