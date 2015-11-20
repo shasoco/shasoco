@@ -96,3 +96,13 @@ volumes/ - content of data-containers volumes
 
 A infrastructure project with gitlab, ldap and fusiondirectory (ldap manager) https://github.com/kodare/infrastructure
 Probably a good starting point.
+
+### For developers
+
+To rebuild the image:
+
+`npm run build`
+
+To tag the image:
+
+`docker tag jeko/shasoco:latest jeko/shasoco:0.0.1`

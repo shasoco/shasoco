@@ -1,2 +1,20 @@
 #!/bin/bash
-docker run --rm -it -v "$(pwd):$(pwd)" -w "$(pwd)" shasoco:lastest /shasoco/bin/shasoco.js "$@"
+mkdir -p ~/.shasoco
+
+if [ -f ~/.shasoco/version ]; then
+    . ~/.shasoco/version
+else
+    echo "SHASOCO_VERSION=latest" >> ~/.shasoco/version
+fi
+
+if [ _$1 = _version ]; then
+    if [ _$2 = _ ]; then
+        echo "Using shasoco version '$SHASOCO_VERSION'"
+    else
+        echo "SHASOCO_VERSION=$2" >> ~/.shasoco/version
+        echo "Enabled shasoco version '$2'"
+    fi
+    exit 0
+fi
+
+docker run --rm -it -v "$(pwd):$(pwd)" -w "$(pwd)" jeko/shasoco:$SHASOCO_VERSION /shasoco/bin/shasoco.js "$@"
