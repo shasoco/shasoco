@@ -1,0 +1,57 @@
+wordpress:
+  image: wordpress
+  links:
+    - db:mysql
+  volumes:
+    - ./php.ini:/usr/local/etc/php/php.ini
+  volumes_from:
+    - webdata
+  environment:
+    - WORDPRESS_DB_NAME=wordpress
+    - WORDPRESS_DB_USER=admin
+    - WORDPRESS_DB_PASSWORD=<%-adminpassword%>
+  restart: always
+
+phpmyadmin:
+  image: corbinu/docker-phpmyadmin
+  links:
+    - db:mysql
+  environment:
+    - MYSQL_USERNAME=root
+    - MYSQL_PASSWORD=<%-rootpassword%>
+    - PMA_SECRET=<%-salt%>
+    - PMA_USERNAME=admin
+    - PMA_PASSWORD=<%-adminpassword%>
+  restart: always
+
+db:
+  image: mysql:5.6
+  volumes_from:
+    - dbdata
+  environment:
+    - MYSQL_ROOT_PASSWORD=<%-rootpassword%>
+    - MYSQL_USER=admin
+    - MYSQL_PASSWORD=<%-adminpassword%>
+    - MYSQL_DATABASE=wordpress
+  restart: always
+
+#mail:
+#  image: hectane/hectane:0.2.1
+#  volumes:
+#    - /data
+#  environment:
+#    - DISABLE_SSL_VERIFICATION=1
+#  restart: always
+
+dbdata:
+  image: busybox
+  command: echo ready
+  volumes:
+    - /var/lib/mysql
+
+webdata:
+  image: busybox
+  command: echo ready
+  volumes:
+    - /var/www/html
+

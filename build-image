@@ -2,4 +2,4 @@
 cd "`dirname $0`"
 set -e
 docker build -t jeko/shasoco:latest .
-docker tag jeko/shasoco:latest jeko/shasoco:`cat package.json|grep \"version\"|cut -d\" -f4`
+docker tag -f jeko/shasoco:latest jeko/shasoco:`cat package.json|grep \"version\"|cut -d\" -f4`
