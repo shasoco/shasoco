@@ -2,7 +2,7 @@
   "name": "shasoco",
   "version": "0.0.1",
   "description": "Easily manage your Shared-Source Consortium infrastructure",
-  "main": "index.js",
+  "main": "lib/commands.js",
   "bin": {
     "shasoco": "./bin/shasoco.js"
   },
