@@ -24,6 +24,7 @@
     "commander": "^2.9.0",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
+    "progress": "^1.1.8",
     "shelljs": "^0.5.3"
   }
 }
