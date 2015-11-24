@@ -1,21 +1,31 @@
+
+#
+# Wordpress Stack:
+#
+# - wordpress
+# - mysql
+# - hectane
+#
+
 wordpress:
-  image: wordpress
+  image: wordpress:4.3
   links:
-    - db:mysql
+    - wordpressdb:mysql
+    - wordpressmail:mail
   volumes:
-    - ./php.ini:/usr/local/etc/php/php.ini
+    - ./wordpress-php.ini:/usr/local/etc/php/php.ini
   volumes_from:
-    - webdata
+    - wordpressdata
   environment:
     - WORDPRESS_DB_NAME=wordpress
     - WORDPRESS_DB_USER=admin
     - WORDPRESS_DB_PASSWORD=<%-adminpassword%>
   restart: always
 
-db:
+wordpressdb:
   image: mysql:5.6
   volumes_from:
-    - dbdata
+    - wordpressdbdata
   environment:
     - MYSQL_ROOT_PASSWORD=<%-rootpassword%>
     - MYSQL_USER=admin
@@ -23,7 +33,7 @@ db:
     - MYSQL_DATABASE=wordpress
   restart: always
 
-mail:
+wordpressmail:
   image: hectane/hectane:0.2.1
   volumes:
     - /data
@@ -31,15 +41,19 @@ mail:
     - DISABLE_SSL_VERIFICATION=1
   restart: always
 
-dbdata:
+wordpressdbdata:
   image: busybox
   command: echo ready
   volumes:
     - /var/lib/mysql
 
-webdata:
+wordpressdata:
   image: busybox
   command: echo ready
   volumes:
     - /var/www/html
+
+#
+#
+#
 

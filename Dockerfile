@@ -4,4 +4,5 @@ COPY package.json /shasoco/package.json
 WORKDIR /shasoco
 RUN npm install
 COPY bin /shasoco/bin
+COPY compose /shasoco/compose
 COPY lib /shasoco/lib

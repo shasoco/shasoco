@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-require('../lib/commands')
-    .upgrade.registerFull(require('commander'))
-    .parse(process.argv);
+var cmd = require('../lib/commands').upgrade;
+var args = cmd.registerFull(require('commander')).parse(process.argv);
+cmd.action(args);
