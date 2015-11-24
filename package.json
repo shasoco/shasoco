@@ -1,6 +1,6 @@
 {
   "name": "shasoco",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Easily manage your Shared-Source Consortium infrastructure",
   "main": "lib/commands.js",
   "bin": {
