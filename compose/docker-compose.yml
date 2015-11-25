@@ -1,3 +1,16 @@
+#
+# Proxy Stack
+#
+
+proxy:
+    image: tutum/haproxy:0.2.1
+    links:
+     - wordpress:www
+    ports:
+     - <%-httpPort%>:<%-httpPort%>
+     - <%-httpsPort%>:<%-httpsPort%>
+    environment:
+     - DEFAULT_SSL_CERT=<%-sslcert%>
 
 #
 # Wordpress Stack:
@@ -10,13 +23,16 @@
 wordpress:
   image: wordpress:4.3
   links:
-    - wordpressdb:mysql
+    - wordpressdb:db
     - wordpressmail:mail
   volumes:
     - ./wordpress-php.ini:/usr/local/etc/php/php.ini
   volumes_from:
     - wordpressdata
   environment:
+    - VIRTUAL_HOST=http://www.<%-name%><% if(httpPort!='80') print(':'+httpPort); %>,https://www.<%-name%><% if(httpsPort!='443') print(':'+httpsPort); %>
+    - SSL_CERT=<%-sslcert%>
+    - WORDPRESS_DB_HOST=db
     - WORDPRESS_DB_NAME=wordpress
     - WORDPRESS_DB_USER=admin
     - WORDPRESS_DB_PASSWORD=<%-adminpassword%>
