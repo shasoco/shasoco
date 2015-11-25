@@ -7,10 +7,10 @@ proxy:
     links:
      - wordpress:www
     ports:
-     - <%-httpPort%>:<%-httpPort%>
-     - <%-httpsPort%>:<%-httpsPort%>
+     - <%=httpPort%>:<%=httpPort%>
+     - <%=httpsPort%>:<%=httpsPort%>
     environment:
-     - DEFAULT_SSL_CERT=<%-sslcert%>
+     - DEFAULT_SSL_CERT=<%=sslcert%>
 
 #
 # Wordpress Stack:
@@ -30,12 +30,12 @@ wordpress:
   volumes_from:
     - wordpressdata
   environment:
-    - VIRTUAL_HOST=http://www.<%-name%><% if(httpPort!='80') print(':'+httpPort); %>,https://www.<%-name%><% if(httpsPort!='443') print(':'+httpsPort); %>
-    - SSL_CERT=<%-sslcert%>
+    - VIRTUAL_HOST=http://www.<%=httpHost%>,https://www.<%=httpsHost%>
+    - SSL_CERT=<%=sslcert%>
     - WORDPRESS_DB_HOST=db
     - WORDPRESS_DB_NAME=wordpress
     - WORDPRESS_DB_USER=admin
-    - WORDPRESS_DB_PASSWORD=<%-adminpassword%>
+    - WORDPRESS_DB_PASSWORD=<%=adminpassword%>
   restart: always
 
 wordpressdb:
@@ -43,9 +43,9 @@ wordpressdb:
   volumes_from:
     - wordpressdbdata
   environment:
-    - MYSQL_ROOT_PASSWORD=<%-rootpassword%>
+    - MYSQL_ROOT_PASSWORD=<%=rootpassword%>
     - MYSQL_USER=admin
-    - MYSQL_PASSWORD=<%-adminpassword%>
+    - MYSQL_PASSWORD=<%=adminpassword%>
     - MYSQL_DATABASE=wordpress
   restart: always
 
