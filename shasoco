@@ -1,10 +1,12 @@
 #!/bin/bash
 mkdir -p ~/.shasoco
 
-if [ -f ~/.shasoco/version ]; then
-    . ~/.shasoco/version
-else
-    echo "SHASOCO_VERSION=latest" >> ~/.shasoco/version
+if [ -z $SHASOCO_VERSION ]; then
+    if [ -f ~/.shasoco/version ]; then
+        . ~/.shasoco/version
+    else
+        echo "SHASOCO_VERSION=latest" >> ~/.shasoco/version
+    fi
 fi
 
 if [ _$1 = _version ]; then

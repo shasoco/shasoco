@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-require('../lib/commands')
-    .stop.registerFull(require('commander'))
-    .parse(process.argv);
+var cmd = require('../lib/commands').stop;
+var args = cmd.registerFull(require('commander')).parse(process.argv);
+cmd.action(args);
