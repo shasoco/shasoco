@@ -23,11 +23,12 @@ directory:
     links:
      - ldap
     environment:
-     - VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>
+     - "VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>"
      - SSL_CERT=<%-sslcert%>
      - LDAP_ORGANIZATION=<%=name%>
      - LDAP_DOMAIN=<%=name%>
-     - LDAP_PASSWORD=<%=adminpassword%>
+     - LDAP_PASSWORD=<%=rootpassword%>
+     - FUSIONDIRECTORY_PASSWORD=<%=adminpassword%>
 
 ldap:
     image: shasoco/openldap:2.4
@@ -37,7 +38,7 @@ ldap:
     environment:
      - LDAP_ORGANIZATION=<%=name%>
      - LDAP_DOMAIN=<%=name%>
-     - LDAP_PASSWORD=<%=adminpassword%>
+     - LDAP_PASSWORD=<%=rootpassword%>
 
 ldapdata:
     image: busybox
@@ -63,7 +64,7 @@ wordpress:
   volumes_from:
     - wordpressdata
   environment:
-    - VIRTUAL_HOST=http://www.<%=httpHost%>,https://www.<%=httpsHost%>
+    - "VIRTUAL_HOST=http://www.<%=httpHost%>,https://www.<%=httpsHost%>,http://<%=httpHost%>,https://<%=httpsHost%>"
     - SSL_CERT=<%=sslcert%>
     - WORDPRESS_DB_HOST=db
     - WORDPRESS_DB_NAME=wordpress
