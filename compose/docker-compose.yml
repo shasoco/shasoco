@@ -5,12 +5,45 @@
 proxy:
     image: tutum/haproxy:0.2.1
     links:
-     - wordpress:www
+     - wordpress
+     - directory
     ports:
      - <%=httpPort%>:<%=httpPort%>
      - <%=httpsPort%>:<%=httpsPort%>
     environment:
      - DEFAULT_SSL_CERT=<%=sslcert%>
+
+#
+# LDAP Stack
+#
+
+directory:
+    image: shasoco/fusiondirectory:1.0
+    restart: always
+    links:
+     - ldap
+    environment:
+     - VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>
+     - SSL_CERT=<%-sslcert%>
+     - LDAP_ORGANIZATION=<%=name%>
+     - LDAP_DOMAIN=<%=name%>
+     - LDAP_PASSWORD=<%=adminpassword%>
+
+ldap:
+    image: shasoco/openldap:2.4
+    restart: always
+    volumes_from:
+     - ldapdata
+    environment:
+     - LDAP_ORGANIZATION=<%=name%>
+     - LDAP_DOMAIN=<%=name%>
+     - LDAP_PASSWORD=<%=adminpassword%>
+
+ldapdata:
+    image: busybox
+    command: echo ready
+    volumes:
+     - /var/lib/ldap/
 
 #
 # Wordpress Stack:
