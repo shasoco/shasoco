@@ -1,12 +1,16 @@
 #
-# Proxy Stack
+# Proxy Stack:
+#
+# - haproxy
 #
 
 proxy:
     image: tutum/haproxy:0.2.1
+    hostname: proxy.<%=name%>
     links:
      - wordpress
      - directory
+     - gitlab
     ports:
      - <%=httpPort%>:<%=httpPort%>
      - <%=httpsPort%>:<%=httpsPort%>
@@ -14,11 +18,15 @@ proxy:
      - DEFAULT_SSL_CERT=<%=sslcert%>
 
 #
-# LDAP Stack
+# LDAP Stack:
+#
+# - openldap (slapd)
+# - fusiondirectory
 #
 
 directory:
-    image: shasoco/fusiondirectory:1.0
+    image: shasoco/fusiondirectory:1.0.9.1
+    hostname: directory.<%=name%>
     restart: always
     links:
      - ldap
@@ -31,7 +39,8 @@ directory:
      - FUSIONDIRECTORY_PASSWORD=<%=adminpassword%>
 
 ldap:
-    image: shasoco/openldap:2.4
+    image: shasoco/openldap:2.4.40
+    hostname: ldap.<%=name%>
     restart: always
     volumes_from:
      - ldapdata
@@ -56,6 +65,7 @@ ldapdata:
 
 wordpress:
   image: wordpress:4.3
+  hostname: www.<%=name%>
   links:
     - wordpressdb:db
     - wordpressmail:mail
@@ -103,6 +113,124 @@ wordpressdata:
   volumes:
     - /var/www/html
 
+#
+# GitLab Stack:
+#
+# - gitlab
+# - postgres
+# - redis
+#
+gitlab:
+    image: sameersbn/gitlab:8.2.1-1
+    hostname: gitlab.<%=name%>
+    restart: always
+    links:
+     - gitlabredis:redisio
+     - gitlabpostgresql:postgresql
+     - ldap
+    #ports:
+    # - "10080:80"
+    # - "10022:22"
+    environment:
+     - "VIRTUAL_HOST=http://gitlab.<%=httpHost%>,https://gitlab.<%=httpsHost%>"
+     - SSL_CERT=<%=sslcert%>
+     - TCP_PORTS=22/ssl
+
+     # gitlab config
+     - DEBUG=false
+     #- TZ=Europe/Paris
+     #- GITLAB_TIMEZONE=UTC
+
+     - GITLAB_HTTPS=true
+     - SSL_SELF_SIGNED=<%=(sslcertselfsigned?'true':'false')%>
+     - GITLAB_HOST=gitlab.<%=name%>
+     - GITLAB_PORT=<%=httpsPort%>
+     - GITLAB_SSH_PORT=<%=gitSshPort%>
+     - GITLAB_RELATIVE_URL_ROOT=
+
+     - GITLAB_SECRETS_DB_KEY_BASE=<%=salt%>
+     - GITLAB_ROOT_PASSWORD=<%=adminpassword%>
+
+     - GITLAB_NOTIFY_ON_BROKEN_BUILDS=true
+     - GITLAB_NOTIFY_PUSHER=false
+
+     - "GITLAB_EMAIL_DISPLAY_NAME=GitLab <%=name%>"
+     - GITLAB_EMAIL=notifications@<%=name%>
+     - GITLAB_EMAIL_REPLY_TO=noreply@<%=name%>
+     - GITLAB_INCOMING_EMAIL_ADDRESS=reply@<%=name%>
+
+     - GITLAB_USERNAME_CHANGE=false
+
+     - GITLAB_BACKUPS=disabled
+     #- GITLAB_BACKUP_TIME=01:00
+     #- GITLAB_BACKUP_EXPIRY=90000
+
+     - SMTP_ENABLED=false
+     - SMTP_DOMAIN=www.example.com
+     - SMTP_HOST=smtp.gmail.com
+     - SMTP_PORT=587
+     - SMTP_USER=mailer@example.com
+     - SMTP_PASS=password
+     - SMTP_STARTTLS=true
+     - SMTP_AUTHENTICATION=login
+
+     - IMAP_ENABLED=false
+     - IMAP_HOST=imap.gmail.com
+     - IMAP_PORT=993
+     - IMAP_USER=mailer@example.com
+     - IMAP_PASS=password
+     - IMAP_SSL=true
+     - IMAP_STARTTLS=false
+
+     - LDAP_ENABLED=true
+     - LDAP_HOST=ldap
+     - LDAP_PORT=389
+     #LDAP_UID: LDAP UID. Defaults to sAMAccountName
+     #LDAP_METHOD: LDAP method, Possible values are ssl, tls and plain. Defaults to plain
+     - LDAP_BASE="ou=people,<%=ldapdc%>"
+     - LDAP_BIND_DN="cn=admin,<%=ldapdc%>"
+     - LDAP_PASS=<%=rootpassword%>
+     - LDAP_ACTIVE_DIRECTORY=false
+     - LDAP_ALLOW_USERNAME_OR_EMAIL_LOGIN=false
+     - LDAP_BLOCK_AUTO_CREATED_USERS=true
+     #LDAP_USER_FILTER: Filter LDAP users. No default.
+
+    volumes_from:
+     - gitlabdata
+
+gitlabredis:
+    image: sameersbn/redis:latest
+    restart: always
+    volumes_from:
+     - gitlabredisdata
+
+gitlabpostgresql:
+    restart: always
+    image: sameersbn/postgresql:9.4-8
+    environment:
+     - DB_USER=gitlab
+     - DB_PASS=<%=rootpassword%>
+     - DB_NAME=gitlabhq_production
+    volumes_from:
+     - gitlabpostgresqldata
+
+gitlabdata:
+    image: busybox
+    command: echo ready
+    volumes:
+     - /home/git/data
+
+gitlabredisdata:
+    image: busybox
+    command: echo ready
+    volumes:
+     - /var/lib/redis
+
+gitlabpostgresqldata:
+    image: busybox
+    command: echo ready
+    volumes:
+     - /var/lib/postgresql
 #
 #
 #
