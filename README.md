@@ -29,17 +29,18 @@ Service 3,4,5,6 use the LDAP server for authentication (same login/password for 
 
 A reverse proxy (nginx/haproxy) do the routing depending on the hostname.
 
-## CLI interface
+## Installation
 
-Shasoco requires the latest version of docker.
+Shasoco's only requirement is to have latest version of docker installed on the host.
 
-To install the cli tool:
+To install `shasoco` globally, execute the below:
+```
+curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee /usr/local/bin/shasoco && sudo chmod +x /usr/local/bin/shasoco
+```
 
-    $ curl “http://whatever” > /usr/bin/shasoco
-    $ chmod +x /usr/bin/shasoco
+## Usage
 
 Find below the supported command line options.
-
 
 ### *$ shasoco deploy myconsortium.org [--port 80] [--version 1.0.1] [--from-backup backup_20151231.tgz]*
 
