@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 mkdir -p ~/.shasoco
 
 if [ -z $SHASOCO_VERSION ]; then
@@ -13,7 +14,10 @@ if [ _$1 = _version ]; then
     if [ _$2 = _ ]; then
         echo "Using shasoco version '$SHASOCO_VERSION'"
     else
-        echo "SHASOCO_VERSION=$2" >> ~/.shasoco/version
+        SHASOCO_VERSION=$2
+        docker pull jeko/shasoco:$SHASOCO_VERSION
+        docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -it -w /shasoco/compose jeko/shasoco:$SHASOCO_VERSION docker-compose pull
+        echo "SHASOCO_VERSION=$SHASOCO_VERSION" >> ~/.shasoco/version
         echo "Enabled shasoco version '$2'"
     fi
     exit 0
