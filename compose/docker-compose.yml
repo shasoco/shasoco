@@ -185,10 +185,10 @@ gitlab:
      - LDAP_ENABLED=true
      - LDAP_HOST=ldap
      - LDAP_PORT=389
-     #LDAP_UID: LDAP UID. Defaults to sAMAccountName
+     - LDAP_UID=uid
      #LDAP_METHOD: LDAP method, Possible values are ssl, tls and plain. Defaults to plain
-     - LDAP_BASE="ou=people,<%=ldapdc%>"
-     - LDAP_BIND_DN="cn=admin,<%=ldapdc%>"
+     - "LDAP_BASE=ou=people,<%=ldapdc%>"
+     - "LDAP_BIND_DN=cn=admin,<%=ldapdc%>"
      - LDAP_PASS=<%=rootpassword%>
      - LDAP_ACTIVE_DIRECTORY=false
      - LDAP_ALLOW_USERNAME_OR_EMAIL_LOGIN=false
