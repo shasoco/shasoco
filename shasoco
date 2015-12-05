@@ -16,11 +16,11 @@ if [ _$1 = _version ]; then
     else
         SHASOCO_VERSION=$2
         docker pull jeko/shasoco:$SHASOCO_VERSION
-        docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -it -w /shasoco/compose jeko/shasoco:$SHASOCO_VERSION docker-compose pull
+        docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -w /shasoco/compose jeko/shasoco:$SHASOCO_VERSION docker-compose pull
         echo "SHASOCO_VERSION=$SHASOCO_VERSION" >> ~/.shasoco/version
         echo "Enabled shasoco version '$2'"
     fi
     exit 0
 fi
 
-docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -it -v "$HOME:/root" -v "$(pwd):$(pwd)" -w "$(pwd)" jeko/shasoco:$SHASOCO_VERSION /shasoco/bin/shasoco.js "$@"
+docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -v "$HOME:/root" -v "$(pwd):$(pwd)" -w "$(pwd)" jeko/shasoco:$SHASOCO_VERSION /shasoco/bin/shasoco.js "$@"
