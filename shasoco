@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-mkdir -p ~/.shasoco
+mkdir -p ~/.shasoco/domains
 
 if [ -z $SHASOCO_VERSION ]; then
     if [ -f ~/.shasoco/version ]; then
