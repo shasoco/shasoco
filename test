@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+vagrant up
+vagrant ssh --command "echo 127.0.1.1 www.fovea.cc gitlab.fovea.cc directory.fovea.cc | sudo tee -a /etc/hosts"
+vagrant ssh --command "/vagrant/build-image"
+vagrant ssh --command "/vagrant/shasoco deploy fovea.cc"
+vagrant ssh --command "curl -sik https://www.fovea.cc" | grep wp-admin
+vagrant ssh --command "curl -sik https://gitlab.fovea.cc" | grep users/sign_in | grep Location
+vagrant ssh --command "curl -sik https://directory.fovea.cc/fusiondirectory/" | grep FusionDirectory | grep title
+vagrant ssh --command "/vagrant/shasoco ps" | grep fovea.cc | grep UP
+
+echo
+echo Shasoco test VM will be destroyed in 30 minutes. Hit CTRL-C to cancel.
+echo
+sleep 3600
+vagrant destroy -f
