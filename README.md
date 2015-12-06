@@ -42,3 +42,10 @@ curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee
 
 Find below the supported command line options.
 
+## Test
+
+The `test` script uses vagrant to perform high-level integration tests on a fresh VM.
+
+    ./test
+
+It'll build the image from the current working-tree.

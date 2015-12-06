@@ -23,9 +23,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Install Docker
     pkg_cmd = "export DEBIAN_FRONTEND=noninteractive; "
     pkg_cmd << "wget -q -O - https://get.docker.io/gpg | apt-key add -; "
-    pkg_cmd << "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list; "
+    pkg_cmd << "echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list; "
     pkg_cmd << "apt-get update -qq; "
-    pkg_cmd << "apt-get install -q -y --force-yes lxc-docker ; "
+    pkg_cmd << "apt-get install -q -y --force-yes docker-engine ; "
 
     # Add vagrant user to the docker group
     pkg_cmd << "usermod -a -G docker vagrant; "
