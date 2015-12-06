@@ -7,6 +7,7 @@
 proxy:
     image: tutum/haproxy:0.2.1
     hostname: proxy.<%=name%>
+    restart: always
     links:
      - wordpress
      - directory
@@ -50,7 +51,7 @@ ldap:
      - LDAP_PASSWORD=<%=rootpassword%>
 
 ldapdata:
-    image: busybox
+    image: debian:jessie
     command: echo ready
     volumes:
      - /var/lib/ldap/
@@ -101,14 +102,24 @@ wordpressmail:
     - DISABLE_SSL_VERIFICATION=1
   restart: always
 
+wordpressbackup:
+    image: aveltens/wordpress-backup
+    entrypoint: sh -c
+    command: echo ready
+    volumes_from:
+     - wordpressdata
+     - backup
+    links:
+     - wordpressdb:mysql
+
 wordpressdbdata:
-  image: busybox
+  image: debian:jessie
   command: echo ready
   volumes:
     - /var/lib/mysql
 
 wordpressdata:
-  image: busybox
+  image: debian:jessie
   command: echo ready
   volumes:
     - /var/www/html
@@ -215,23 +226,42 @@ gitlabpostgresql:
      - gitlabpostgresqldata
 
 gitlabdata:
-    image: busybox
+    image: debian:jessie
     command: echo ready
     volumes:
      - /home/git/data
 
 gitlabredisdata:
-    image: busybox
+    image: debian:jessie
     command: echo ready
     volumes:
      - /var/lib/redis
 
 gitlabpostgresqldata:
-    image: busybox
+    image: debian:jessie
     command: echo ready
     volumes:
      - /var/lib/postgresql
 #
 #
 #
+
+backupsftp:
+    image: jeko/sftp:latest
+    restart: always
+    command: "admin:<%=adminpassword%>:33::/shasoco-backup"
+    ports:
+     - "<%=backupSftpPort%>:22"
+    volumes_from:
+     - backup
+
+backup:
+    image: debian:jessie
+    # sleep for a thousand years
+    # It would be usefull if we want to do 'docker-compose exec' stuff in this container.
+    # But maybe 'docker-compose run' is as good, need to study that more.
+    # command: sleep 1314000000
+    command: echo ready
+    volumes:
+     - /shasoco-backup
 
