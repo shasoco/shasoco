@@ -13,3 +13,4 @@ RUN npm install
 COPY bin /shasoco/bin
 COPY compose /shasoco/compose
 COPY lib /shasoco/lib
+VOLUME /var/lib/shasoco

@@ -1,7 +1,22 @@
 #!/bin/bash
-set -e
-mkdir -p ~/.shasoco/domains
+#
+# shasoco CLI
+# (c)2015, fovea.cc
+#
+# This is a meta-script that will launch the real tool inside its own docker
+# container. However this script got its responsibilities too:
+#
+# - Run the tool at a selected version
+# - Remember the selected version
+# - Create a data-container to store the data
+# - Add a backdoor to inside the shasoco container environment
+#
 
+set -e
+mkdir -p ~/.shasoco
+
+# shasoco will run using the same version as last run
+# upgrades aren't automatic.
 if [ -z $SHASOCO_VERSION ]; then
     if [ -f ~/.shasoco/version ]; then
         . ~/.shasoco/version
@@ -10,6 +25,7 @@ if [ -z $SHASOCO_VERSION ]; then
     fi
 fi
 
+# "shasoco version" will either show or set the version in use
 if [ _$1 = _version ]; then
     if [ _$2 = _ ]; then
         echo "Using shasoco version '$SHASOCO_VERSION'"
@@ -23,15 +39,30 @@ if [ _$1 = _version ]; then
     exit 0
 fi
 
+# Create a data container for shasoco's internals:
+# this include config files for each projects and backups.
+# Data is stored in "/var/lib/shasoco"
+if docker ps -a | grep 'shasocodata$' > /dev/null; then true; else
+    docker run -v /var/lib/shasoco --name shasocodata debian:jessie true
+fi
+
+# Allow to open a shell inside the shasoco environment
+# This is mostly for debuging during development
+COMMAND=/shasoco/bin/shasoco.js
+if [ _$1 = _shell ]; then
+    COMMAND=bash
+    EXTRA=-it
+    shift
+fi
+
+# Run shasoco into its own container, but share our network and docker server.
 docker run \
+    $EXTRA \
     --privileged \
+    --net=host \
     --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
-    -v $(readlink -f /var/lib/docker):/var/lib/docker \
-    -v "$HOME:/root" \
-    -v "$(pwd):$(pwd)" \
-    -w "$(pwd)" \
+    --volumes-from shasocodata \
     jeko/shasoco:$SHASOCO_VERSION \
-    /shasoco/bin/shasoco.js "$@"
+    $COMMAND "$@"
 
-    #-v $(which docker):/bin/docker \
