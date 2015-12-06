@@ -246,17 +246,10 @@ gitlabpostgresqldata:
 #
 #
 
-backupsftp:
-    image: jeko/sftp:latest
-    restart: always
-    command: "admin:<%=adminpassword%>:33::/shasoco-backup"
-    ports:
-     - "<%=backupSftpPort%>:22"
-    volumes_from:
-     - backup
-
+# Temporary storage for backups
 backup:
     image: debian:jessie
+    user: "1000"
     # sleep for a thousand years
     # It would be usefull if we want to do 'docker-compose exec' stuff in this container.
     # But maybe 'docker-compose run' is as good, need to study that more.
