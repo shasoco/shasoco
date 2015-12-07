@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint lib bin && mocha"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,10 @@
   "homepage": "https://github.com/j3k0/shasoco#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "eslint": "^1.10.3",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
+    "mocha": "^2.3.4",
     "progress": "^1.1.8",
     "ramda": "^0.18.0",
     "shelljs": "^0.5.3"
