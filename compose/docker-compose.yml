@@ -174,7 +174,7 @@ gitlab:
 
      - GITLAB_BACKUPS=disabled
      #- GITLAB_BACKUP_TIME=01:00
-     #- GITLAB_BACKUP_EXPIRY=90000
+     - GITLAB_BACKUP_EXPIRY=3600
 
      - SMTP_ENABLED=false
      - SMTP_DOMAIN=www.example.com
@@ -224,6 +224,13 @@ gitlabpostgresql:
      - DB_NAME=gitlabhq_production
     volumes_from:
      - gitlabpostgresqldata
+
+gitlabbackup:
+    image: debian:jessie
+    command: echo ready
+    volumes_from:
+     - backup
+     - gitlabdata
 
 gitlabdata:
     image: debian:jessie

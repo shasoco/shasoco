@@ -1,6 +1,11 @@
 #!/bin/bash
 cd "`dirname $0`"
 set -e
+
+if which npm; then
+    npm test
+fi
+
 VERSION=`cat package.json|grep \"version\"|cut -d\" -f4`
 docker build -t jeko/shasoco:latest .
 docker tag -f jeko/shasoco:latest jeko/shasoco:$VERSION
