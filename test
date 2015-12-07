@@ -14,8 +14,9 @@ vagrant ssh --command "curl -sik https://gitlab.fovea.cc" | grep users/sign_in |
 vagrant ssh --command "curl -sik https://directory.fovea.cc/fusiondirectory/" | grep FusionDirectory | grep title
 vagrant ssh --command "/vagrant/shasoco ps" | grep fovea.cc | grep UP
 
-# Launch a backup
-vagrant ssh --command "/vagrant/shasoco backup fovea.cc"
+# Launch a backup/restore
+vagrant ssh --command "/vagrant/shasoco backup fovea.cc 0"
+vagrant ssh --command "/vagrant/shasoco backup fovea.cc 0"
 
 echo
 echo Shasoco test VM will be destroyed in 30 minutes. Hit CTRL-C to cancel.
