@@ -9,7 +9,7 @@
   "scripts": {
     "build": "",
     "test": "eslint lib bin && mocha",
-    "coverage": "mocha --require blanket --reporter mocha-lcov-reporter | coveralls && ./node_modules/.bin/mocha -r blanket -R html-cov > coverage.html"
+    "coverage": "mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
   },
   "repository": {
     "type": "git",
