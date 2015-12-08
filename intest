@@ -16,7 +16,7 @@ vagrant ssh --command "/vagrant/shasoco ps" | grep fovea.cc | grep UP
 
 # Launch a backup/restore
 vagrant ssh --command "/vagrant/shasoco backup fovea.cc 0"
-vagrant ssh --command "/vagrant/shasoco backup fovea.cc 0"
+vagrant ssh --command "/vagrant/shasoco restore fovea.cc 0"
 
 echo
 echo Shasoco test VM will be destroyed in 30 minutes. Hit CTRL-C to cancel.
