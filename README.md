@@ -1,8 +1,8 @@
 # shasoco
 Easily manage your Shared-Source Consortium infrastructure
 
- * master: [![Circle CI](https://circleci.com/gh/shasoco/shasoco/tree/master.svg?style=svg)](https://circleci.com/gh/shasoco/shasoco/tree/master)
- * develop: [![Circle CI](https://circleci.com/gh/shasoco/shasoco/tree/develop.svg?style=svg)](https://circleci.com/gh/shasoco/shasoco/tree/develop)
+<sup>master:</sup>[![Circle CI master](https://circleci.com/gh/shasoco/shasoco/tree/master.svg?style=svg)](https://circleci.com/gh/shasoco/shasoco/tree/master)
+<sup>develop:</sup>[![Circle CI develop](https://circleci.com/gh/shasoco/shasoco/tree/develop.svg?style=svg)](https://circleci.com/gh/shasoco/shasoco/tree/develop)
 
 ## Vision
 
