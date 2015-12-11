@@ -58,7 +58,6 @@ fi
 # Run shasoco into its own container, but share our network and docker server.
 docker run \
     $EXTRA \
-    --privileged \
     --net=host \
     --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
