@@ -16,14 +16,25 @@ npm test
 vagrant up
 
 # Deploy shasoco for faked domain fovea.cc
-vagrant ssh --command "echo 127.0.1.1 www.fovea.cc gitlab.fovea.cc directory.fovea.cc | sudo tee -a /etc/hosts"
+vagrant ssh --command "echo 127.0.1.1 www.fovea.cc gitlab.fovea.cc directory.fovea.cc redmine.fovea.cc | sudo tee -a /etc/hosts"
 vagrant ssh --command "/vagrant/build-image"
 vagrant ssh --command "/vagrant/shasoco create v0.fovea.cc fovea.cc"
+vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep NEW
+vagrant ssh --command "/vagrant/shasoco prepare v0.fovea.cc"
+vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep READY
+vagrant ssh --command "/vagrant/shasoco up v0.fovea.cc"
+vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep UP
 
-# Test that all services are up and running, and that shasoco report is correct.
+# Test that all services are up and running
 vagrant ssh --command "curl -sik https://www.fovea.cc" | grep wp-admin
 vagrant ssh --command "curl -sik https://gitlab.fovea.cc" | grep users/sign_in | grep Location
 vagrant ssh --command "curl -sik https://directory.fovea.cc/fusiondirectory/" | grep FusionDirectory | grep title
+vagrant ssh --command "curl -sik https://redmine.fovea.cc" | grep Redmine | grep www.redmine.org 
+
+# Test stop and up
+vagrant ssh --command "/vagrant/shasoco stop v0.fovea.cc"
+vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep SAVED
+vagrant ssh --command "/vagrant/shasoco up v0.fovea.cc"
 vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep UP
 
 # Launch a backup/restore
