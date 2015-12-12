@@ -13,8 +13,7 @@ proxy:
      - directory
      - gitlab
      - redmine
-    ports:
-     - <%=httpPort%>:<%=httpPort%>
-     - <%=httpsPort%>:<%=httpsPort%>
     environment:
      - DEFAULT_SSL_CERT=<%=sslcert%>
+     - TCP_PORTS=80,443,22/ssl
+     - EXCLUDE_PORTS=1936
