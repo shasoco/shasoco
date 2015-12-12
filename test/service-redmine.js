@@ -14,7 +14,7 @@ describe('Redmine', function() {
     });
 
     describe('#up()', function() {
-        it('should startup postgresql and redmine', function() {
+        it('starts postgresql and redmine', function() {
             redmine.up({});
             assert(utils.hasWords(['up', 'redminepostgresql'],
                                   compose.lastCall.args[1]));
@@ -24,7 +24,7 @@ describe('Redmine', function() {
     });
 
     describe('#backup()', function() {
-        it('should pg_dump from redminebackup', function() {
+        it('dumps the database using redminebackup', function() {
             redmine.backup({
                 backupPath: "/test"
             });
@@ -34,7 +34,7 @@ describe('Redmine', function() {
     });
 
     describe('#restore()', function() {
-        it('should psql from redminebackup into postgresql', function() {
+        it('restores the database from redminebackup into postgresql', function() {
             redmine.restore({
                 backupPath: "/test"
             });
