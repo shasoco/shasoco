@@ -3,18 +3,7 @@ var sinon = require('sinon');
 var prepare = require('../lib/command/prepare');
 var utils = require('../lib/utils.js');
 
-var sampleConfig = {
-    id: 'my-deploy',
-    domain: 'fovea.cc',
-    sslcert: 'fake-cert',
-    sslcertselfsigned: true,
-    salt: 'salt',
-    rootpassword: '123456',
-    adminpassword: '7890',
-    httpsPort: 443,
-    httpPort: 80,
-    gitSshPort: 22
-};
+var sampleConfig = require('./sample-config').myDeploy();
 
 describe('prepare', function() {
 
@@ -46,6 +35,7 @@ describe('prepare', function() {
             prepare.action({
                 args: [ 'my-deploy' ]
             });
+            assert(errorStub.called);
             existsStub.restore();
         });
 
