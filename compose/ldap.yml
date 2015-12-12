@@ -1,0 +1,37 @@
+#
+# LDAP Stack:
+#
+# - openldap (slapd)
+# - fusiondirectory
+#
+
+directory:
+    image: shasoco/fusiondirectory:1.0.9.1
+    hostname: directory.<%=domain%>
+    restart: always
+    links:
+     - ldap
+    environment:
+     - "VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>"
+     - SSL_CERT=<%-sslcert%>
+     - LDAP_ORGANIZATION=<%=domain%>
+     - LDAP_DOMAIN=<%=domain%>
+     - LDAP_PASSWORD=<%=rootpassword%>
+     - FUSIONDIRECTORY_PASSWORD=<%=adminpassword%>
+
+ldap:
+    image: shasoco/openldap:2.4.40
+    hostname: ldap.<%=domain%>
+    restart: always
+    volumes_from:
+     - ldapdata
+    environment:
+     - LDAP_ORGANIZATION=<%=domain%>
+     - LDAP_DOMAIN=<%=domain%>
+     - LDAP_PASSWORD=<%=rootpassword%>
+
+ldapdata:
+    image: debian:jessie
+    command: echo ready
+    volumes:
+     - /var/lib/ldap/

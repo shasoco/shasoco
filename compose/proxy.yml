@@ -1,0 +1,20 @@
+#
+# Proxy Stack:
+#
+# - haproxy
+#
+
+proxy:
+    image: tutum/haproxy:0.2.1
+    hostname: proxy.<%=domain%>
+    restart: always
+    links:
+     - wordpress
+     - directory
+     - gitlab
+     - redmine
+    ports:
+     - <%=httpPort%>:<%=httpPort%>
+     - <%=httpsPort%>:<%=httpsPort%>
+    environment:
+     - DEFAULT_SSL_CERT=<%=sslcert%>

@@ -7,7 +7,7 @@ describe('Redmine', function() {
 
     var compose;
     before(function() {
-        compose = sinon.stub(redmine.mods.domains, "compose");
+        compose = sinon.stub(redmine.mods.deploys, "compose");
     });
     after(function() {
         compose.restore();

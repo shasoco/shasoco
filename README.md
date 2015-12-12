@@ -47,7 +47,35 @@ curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee
 
 ## Usage
 
-Find below the supported command line options.
+### First deployment
+
+1. shasoco create v0 fovea.cc
+1. shasoco prepare v0
+1. shasoco up v0
+1. shasoco activate v0
+
+### Backup / Restore
+
+1. shasoco backup v0 mybackup
+1. shasoco backup list
+1. shasoco restore v0 v0/mybackup
+
+### Upgrade
+
+1. shasoco deactivate
+1. shasoco backup v0 upgrade1
+1. shasoco create v1 fovea.cc
+1. shasoco prepare v1 --no-pull
+1. shasoco up v1
+1. shasoco restore v1 v0/upgrade1
+1. shasoco activate v1
+1. shasoco rm v0 --delay=10000
+
+### Help
+
+For the list of supported command line options:
+
+    shasoco help [command]
 
 ## Test
 

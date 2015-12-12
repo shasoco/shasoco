@@ -1,0 +1,68 @@
+#
+# Wordpress Stack:
+#
+# - wordpress
+# - mysql
+# - hectane
+#
+
+wordpress:
+  image: wordpress:4.3
+  hostname: www.<%=domain%>
+  links:
+    - wordpressdb:db
+    - wordpressmail:mail
+  volumes:
+    - ./wordpress-php.ini:/usr/local/etc/php/php.ini
+  volumes_from:
+    - wordpressdata
+  environment:
+    - "VIRTUAL_HOST=http://www.<%=httpHost%>,https://www.<%=httpsHost%>,http://<%=httpHost%>,https://<%=httpsHost%>"
+    - SSL_CERT=<%=sslcert%>
+    - WORDPRESS_DB_HOST=db
+    - WORDPRESS_DB_NAME=wordpress
+    - WORDPRESS_DB_USER=admin
+    - WORDPRESS_DB_PASSWORD=<%=adminpassword%>
+  restart: always
+
+wordpressdb:
+  image: mysql:5.6
+  volumes_from:
+    - wordpressdbdata
+  environment:
+    - MYSQL_ROOT_PASSWORD=<%=rootpassword%>
+    - MYSQL_USER=admin
+    - MYSQL_PASSWORD=<%=adminpassword%>
+    - MYSQL_DATABASE=wordpress
+  restart: always
+
+wordpressmail:
+  image: hectane/hectane:0.2.1
+  volumes:
+    - /data
+  environment:
+    - DISABLE_SSL_VERIFICATION=1
+  restart: always
+
+wordpressbackup:
+    image: aveltens/wordpress-backup
+    entrypoint: sh -c
+    command: echo ready
+    volumes_from:
+     - wordpressdata
+     - backup
+    links:
+     - wordpressdb:mysql
+
+wordpressdbdata:
+  image: debian:jessie
+  command: echo ready
+  volumes:
+    - /var/lib/mysql
+
+wordpressdata:
+  image: debian:jessie
+  command: echo ready
+  volumes:
+    - /var/www/html
+

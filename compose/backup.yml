@@ -1,0 +1,8 @@
+# Temporary backup storage
+backup:
+    image: debian:jessie
+    user: "1000"
+    command: echo ready
+    volumes:
+     - /shasoco-backup
+
