@@ -23,6 +23,7 @@
   "homepage": "https://github.com/j3k0/shasoco#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "dockerode": "^2.2.7",
     "eslint": "^1.10.3",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
@@ -40,7 +41,10 @@
   "config": {
     "blanket": {
       "data-cover-never": "node_modules",
-      "pattern": [ "lib", "bin" ]
+      "pattern": [
+        "lib",
+        "bin"
+      ]
     }
   }
 }
