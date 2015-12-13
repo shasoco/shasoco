@@ -2,7 +2,7 @@ var assert = require('assert');
 var sinon = require('sinon');
 var create = require('../lib/command/create');
 
-describe('create', function() {
+describe('Create', function() {
 
     describe('#register()', function() {
         it('should register the "create" command', function() {

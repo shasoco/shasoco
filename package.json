@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "",
-    "test": "eslint lib bin && mocha",
-    "coverage": "mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
+    "test": "eslint lib bin && mocha --bail",
+    "coverage": "mocha --bail -R min && mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
   },
   "repository": {
     "type": "git",

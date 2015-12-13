@@ -2,7 +2,7 @@ var assert = require('assert');
 var sinon = require('sinon');
 var ps = require('../lib/command/ps');
 
-describe('ps', function() {
+describe('Ps', function() {
 
     describe('#register()', function() {
         it('should register the "ps" command', function() {

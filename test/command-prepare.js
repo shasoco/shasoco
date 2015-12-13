@@ -5,7 +5,7 @@ var utils = require('../lib/utils.js');
 
 var sampleConfig = require('./sample-config').myDeploy();
 
-describe('prepare', function() {
+describe('Prepare', function() {
 
     describe('#register()', function() {
         it('registers the "prepare" command', function() {

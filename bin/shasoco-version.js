@@ -1,4 +1,2 @@
 #!/usr/bin/env node
-require('../lib/commands')
-    .version.registerFull(require('commander'))
-    .parse(process.argv);
+require('../lib/binary').run('version', process.argv);

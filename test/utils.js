@@ -1,7 +1,7 @@
 var assert = require('assert');
 var utils = require('../lib/utils');
 
-describe('utils', function() {
+describe('Utils', function() {
     describe('#error()', function () {
         it('should return call the error callback if present', function () {
             var ret;

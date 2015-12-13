@@ -18,7 +18,7 @@ vagrant up
 # Deploy shasoco for faked domain fovea.cc
 vagrant ssh --command "echo 127.0.1.1 www.fovea.cc gitlab.fovea.cc directory.fovea.cc redmine.fovea.cc | sudo tee -a /etc/hosts"
 vagrant ssh --command "/vagrant/build-image"
-vagrant ssh --command "/vagrant/shasoco create v0.fovea.cc fovea.cc"
+vagrant ssh --command "/vagrant/shasoco create --git-ssh-port 22222 v0.fovea.cc fovea.cc"
 vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep NEW
 vagrant ssh --command "/vagrant/shasoco prepare v0.fovea.cc"
 vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep READY
