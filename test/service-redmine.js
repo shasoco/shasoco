@@ -25,21 +25,27 @@ describe('Redmine', function() {
 
     describe('#backup()', function() {
         it('dumps the database using redminebackup', function() {
+            var backupVolume = sinon.stub(redmine.mods.backup, 'backupVolume');
             redmine.backup({
                 backupPath: "/test"
             });
             assert(utils.hasWords([ 'run', 'redminebackup', 'pg_dump' ],
                                   compose.lastCall.args[1]));
+            assert(backupVolume.called);
+            backupVolume.restore();
         });
     });
 
     describe('#restore()', function() {
         it('restores the database from redminebackup into postgresql', function() {
+            var restoreVolume = sinon.stub(redmine.mods.backup, 'restoreVolume');
             redmine.restore({
                 backupPath: "/test"
             });
             assert(utils.hasWords([ 'run', 'redminebackup', 'psql' ],
                                   compose.lastCall.args[1]));
+            assert(restoreVolume.called);
+            restoreVolume.restore();
         });
     });
 });

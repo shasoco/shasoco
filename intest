@@ -24,6 +24,7 @@ vagrant ssh --command "/vagrant/shasoco prepare v0.fovea.cc"
 vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep READY
 vagrant ssh --command "/vagrant/shasoco up v0.fovea.cc"
 vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep UP
+vagrant ssh --command "/vagrant/shasoco activate v0.fovea.cc"
 
 # Test that all services are up and running
 vagrant ssh --command "curl -sik https://www.fovea.cc" | grep wp-admin
@@ -40,6 +41,12 @@ vagrant ssh --command "/vagrant/shasoco ps" | grep v0.fovea.cc | grep UP
 # Launch a backup/restore
 vagrant ssh --command "/vagrant/shasoco backup v0.fovea.cc 0"
 vagrant ssh --command "/vagrant/shasoco restore v0.fovea.cc 0"
+
+# Launch a new version
+vagrant ssh --command "/vagrant/shasoco create --git-ssh-port 22222 v1.fovea.cc fovea.cc"
+vagrant ssh --command "/vagrant/shasoco prepare v1.fovea.cc"
+vagrant ssh --command "/vagrant/shasoco up v1.fovea.cc"
+vagrant ssh --command "/vagrant/shasoco activate v1.fovea.cc"
 
 echo
 echo Shasoco test VM will be destroyed in 30 minutes. Hit CTRL-C to cancel.
