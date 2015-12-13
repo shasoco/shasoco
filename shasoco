@@ -42,7 +42,7 @@ fi
 # Create a data container for shasoco's internals:
 # this include config files for each projects and backups.
 # Data is stored in "/var/lib/shasoco"
-if docker ps -a | grep 'shasocodata$' > /dev/null; then true; else
+if docker ps -a | grep '\bshasocodata\b' > /dev/null; then true; else
     docker run -v /var/lib/shasoco --name shasocodata debian:jessie true
 fi
 
