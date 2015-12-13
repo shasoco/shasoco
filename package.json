@@ -23,6 +23,7 @@
   "homepage": "https://github.com/j3k0/shasoco#readme",
   "dependencies": {
     "commander": "^2.9.0",
+    "deasync": "^0.1.4",
     "dockerode": "^2.2.7",
     "eslint": "^1.10.3",
     "js-yaml": "^3.4.3",
