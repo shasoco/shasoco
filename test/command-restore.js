@@ -15,7 +15,7 @@ describe('Restore', function() {
     });
 
     describe('#action()', function() {
-        var errorStub, safeLoad, saveStub;
+        var errorStub, safeLoad, saveStub, prepareStub;
         beforeEach(function() {
             errorStub = sinon.stub(restore.mods.utils, 'error');
             safeLoad = sinon.stub(restore.mods.deploys, 'safeLoad');
@@ -27,6 +27,7 @@ describe('Restore', function() {
             });
             restore.mods.services = [];
             saveStub = sinon.stub(restore.mods.deploys, 'save');
+            prepareStub = sinon.stub(restore.mods.deploys, 'prepare');
         });
         afterEach(function() {
             errorStub.restore();
@@ -34,6 +35,7 @@ describe('Restore', function() {
             backupRun.restore();
             restore.mods.services = require('../lib/services');
             saveStub.restore();
+            prepareStub.restore();
         });
 
         it('requires a <deploy-id> argument', function() {
