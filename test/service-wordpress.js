@@ -2,7 +2,7 @@ var assert = require('assert');
 var sinon = require('sinon');
 var wordpress = require('../lib/service/wordpress.js');
 var utils = require('../lib/utils.js');
-
+/*
 describe('Wordpress', function() {
 
     var compose, sleep;
@@ -51,3 +51,4 @@ describe('Wordpress', function() {
         });
     });
 });
+*/

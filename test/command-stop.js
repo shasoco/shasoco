@@ -60,7 +60,7 @@ describe('Stop', function() {
                 args: [ sampleConfig.id ],
             }); 
             assert(errorStub.calledOnce);
-            assert(compose.calledOnce);
+            assert(compose.calledTwice);
 
             // restore
             stop.mods.services = require('../lib/services');
