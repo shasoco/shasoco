@@ -63,6 +63,8 @@ redminebackup:
     command: echo ready
     links:
      - redminepostgresql:postgresql
+    volumes:
+     - ./redmine-init.sql:/redmine-init.sql:ro
     volumes_from:
      - redminedata
      - backup

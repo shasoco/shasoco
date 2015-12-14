@@ -1,0 +1,17 @@
+#
+# Vault Stack:
+#
+# - nginx-ldap
+#
+
+vault:
+    image: shasoco/nginx-ldap:1.9.6
+    hostname: vault.<%=domain%>
+    links:
+     - ldap:ldap
+    volumes:
+     - ./vault-nginx.conf:/nginx.conf:ro
+    environment:
+     - "VIRTUAL_HOST=http://vault.<%=httpHost%>,https://vault.<%=httpsHost%>"
+     - SSL_CERT=<%=sslcert%>
+    restart: always

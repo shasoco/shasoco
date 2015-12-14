@@ -13,11 +13,13 @@
 #
 
 set -e
-mkdir -p ~/.shasoco
+
+SHASOCO_PATH=/var/lib/shasoco
 
 # shasoco will run using the same version as last run
 # upgrades aren't automatic.
 if [ -z $SHASOCO_VERSION ]; then
+    mkdir -p ~/.shasoco
     if [ -f ~/.shasoco/version ]; then
         . ~/.shasoco/version
     else
@@ -31,8 +33,8 @@ if [ _$1 = _version ]; then
         echo "Using shasoco version '$SHASOCO_VERSION'"
     else
         SHASOCO_VERSION=$2
-        docker pull jeko/shasoco:$SHASOCO_VERSION
-        docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -w /shasoco/compose jeko/shasoco:$SHASOCO_VERSION docker-compose pull
+        docker pull shasoco/shasoco:$SHASOCO_VERSION
+        #docker run --privileged -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm -w /shasoco/compose shasoco/shasoco:$SHASOCO_VERSION docker-compose pull
         echo "SHASOCO_VERSION=$SHASOCO_VERSION" >> ~/.shasoco/version
         echo "Enabled shasoco version '$2'"
     fi
@@ -43,7 +45,8 @@ fi
 # this include config files for each projects and backups.
 # Data is stored in "/var/lib/shasoco"
 if docker ps -a | grep '\bshasocodata\b' > /dev/null; then true; else
-    docker run -v /var/lib/shasoco --name shasocodata debian:jessie true
+    mkdir -p $SHASOCO_PATH
+    docker run -v $SHASOCO_PATH:$SHASOCO_PATH --name shasocodata debian:jessie true
 fi
 
 # Allow to open a shell inside the shasoco environment
@@ -62,6 +65,6 @@ docker run \
     --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
     --volumes-from shasocodata \
-    jeko/shasoco:$SHASOCO_VERSION \
+    shasoco/shasoco:$SHASOCO_VERSION \
     $COMMAND "$@"
 
