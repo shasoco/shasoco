@@ -1,0 +1,16 @@
+
+smtp:
+    image: marvambass/versatile-postfix
+    restart: always
+    command: <%=domain%> mailer:<%=adminpassword%> root:<%=rootpassword%>
+    environment:
+     - "ALIASES=postmaster:root;hostmaster:root;webmaster:root"
+    volumes_from:
+     - smtpdata
+
+smtpdata:
+    image: debian:jessie
+    command: echo ready
+    volumes:
+     - /etc/postfix/dkim
+     - /var/mail
