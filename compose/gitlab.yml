@@ -13,13 +13,15 @@ gitlab:
      - gitlabredis:redisio
      - gitlabpostgresql:postgresql
      - ldap
+     - smtp
     #ports:
     # - "10080:80"
     # - "10022:22"
     environment:
      - "VIRTUAL_HOST=http://gitlab.<%=httpHost%>,https://gitlab.<%=httpsHost%>"
      - SSL_CERT=<%=sslcert%>
-     - TCP_PORTS=22/ssl
+     - FORCE_SSL=YES
+     - TCP_PORTS=22
 
      # gitlab config
      - DEBUG=false
@@ -50,14 +52,14 @@ gitlab:
      #- GITLAB_BACKUP_TIME=01:00
      - GITLAB_BACKUP_EXPIRY=3600
 
-     - SMTP_ENABLED=false
-     - SMTP_DOMAIN=www.example.com
-     - SMTP_HOST=smtp.gmail.com
-     - SMTP_PORT=587
-     - SMTP_USER=mailer@example.com
-     - SMTP_PASS=password
-     - SMTP_STARTTLS=true
-     - SMTP_AUTHENTICATION=login
+     - SMTP_ENABLED=true
+     - SMTP_DOMAIN=<%=domain%>
+     - SMTP_HOST=smtp
+     - SMTP_PORT=25
+     - SMTP_USER=mailer@<%=domain%>
+     - SMTP_PASS=<%=adminpassword%>
+     - SMTP_STARTTLS=false
+     #- SMTP_AUTHENTICATION=login
 
      - IMAP_ENABLED=false
      - IMAP_HOST=imap.gmail.com

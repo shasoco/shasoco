@@ -12,6 +12,7 @@ wordpress:
   links:
     - wordpressdb:db
     - wordpressmail:mail
+    - ldap
   volumes:
     - ./wordpress-php.ini:/usr/local/etc/php/php.ini
   volumes_from:

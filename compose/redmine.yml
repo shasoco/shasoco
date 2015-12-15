@@ -12,21 +12,23 @@ redmine:
     links:
      - redminepostgresql:postgresql
      - ldap
+     - smtp
     environment:
      - "VIRTUAL_HOST=http://redmine.<%=httpHost%>,https://redmine.<%=httpsHost%>"
      - SSL_CERT=<%=sslcert%>
+     - FORCE_SSL=YES
      #- TZ=Europe/Paris
      - REDMINE_PORT=<%=httpsPort%>
      - REDMINE_HTTPS=true
-     #- SMTP_ENABLED=false
-     #- SMTP_DOMAIN=www.example.com
-     #- SMTP_HOST=smtp.gmail.com
-     #- SMTP_PORT=587
-     #- SMTP_USER=mailer@example.com
-     #- SMTP_PASS=password
-     #- SMTP_STARTTLS=true
-     #- SMTP_AUTHENTICATION=:login
-     #- IMAP_ENABLED=false
+     - SMTP_ENABLED=true
+     - SMTP_DOMAIN=<%=domain%>
+     - SMTP_HOST=smtp
+     - SMTP_PORT=25
+     - SMTP_USER=mailer@<%=domain%>
+     - SMTP_PASS=<%=adminpassword%>
+     - SMTP_STARTTLS=false
+     #- SMTP_AUTHENTICATION=login
+     - IMAP_ENABLED=false
      #- IMAP_USER=mailer@example.com
      #- IMAP_PASS=password
      #- IMAP_HOST=imap.gmail.com

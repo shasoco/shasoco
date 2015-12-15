@@ -14,7 +14,25 @@ proxy:
      - gitlab
      - redmine
      - vault
+    expose:
+     - 80
+     - 443
     environment:
      - DEFAULT_SSL_CERT=<%=sslcert%>
-     - TCP_PORTS=80,443,22/ssl
-     - EXCLUDE_PORTS=1936
+     - FORCE_SSL=YES
+     - TCP_PORTS=80,443
+     - EXCLUDE_PORTS=22,1936
+
+proxyssh:
+    image: tutum/haproxy:0.2.1
+    hostname: proxyssh.<%=domain%>
+    restart: always
+    links:
+     - gitlab
+    expose:
+     - 22
+    environment:
+     - TCP_PORTS=22
+     - MODE=tcp
+     - TIMEOUT=connect 30s, client 24h, server 24h
+     - EXCLUDE_PORTS=80,443,1936

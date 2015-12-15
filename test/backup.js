@@ -17,7 +17,6 @@ describe('Backup', function() {
             });
             assert(exec.called);
             var cmd = exec.args[0][0];
-            console.log(cmd);
             assert(cmd.indexOf(" mkdir -p /bak/serv ") >= 0);
             //assert(cmd.indexOf(" /var/lib/serv /bak/serv/var/lib ") >= 0);
             exec.restore();
