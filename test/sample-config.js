@@ -4,6 +4,7 @@ module.exports = {
         return {
             id: 'my-deploy',
             domain: 'fovea.cc',
+            vaultpath: '/var/lib/shasoco/fovea.cc/vault',
             sslcert: 'fake-cert',
             sslcertselfsigned: true,
             salt: 'salt',

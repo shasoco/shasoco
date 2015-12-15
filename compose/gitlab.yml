@@ -99,13 +99,6 @@ gitlabpostgresql:
     volumes_from:
      - gitlabpostgresqldata
 
-gitlabbackup:
-    image: debian:jessie
-    command: echo ready
-    volumes_from:
-     - backup
-     - gitlabdata
-
 gitlabdata:
     image: debian:jessie
     command: echo ready

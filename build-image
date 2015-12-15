@@ -7,5 +7,5 @@ if which npm; then
 fi
 
 VERSION=`cat package.json|grep \"version\"|cut -d\" -f4`
-docker build -t jeko/shasoco:latest .
-docker tag -f jeko/shasoco:latest jeko/shasoco:$VERSION
+docker build -t shasoco/shasoco:latest .
+docker tag -f shasoco/shasoco:latest shasoco/shasoco:$VERSION

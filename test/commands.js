@@ -7,7 +7,6 @@ describe('Commands', function() {
         assert(commands.versions);
         assert(commands.create);
         assert(commands.prepare);
-        assert(commands.deploy);
         assert(commands.ps);
         assert(commands.up);
         assert(commands.stop);

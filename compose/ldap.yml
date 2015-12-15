@@ -18,6 +18,8 @@ directory:
      - LDAP_DOMAIN=<%=domain%>
      - LDAP_PASSWORD=<%=rootpassword%>
      - FUSIONDIRECTORY_PASSWORD=<%=adminpassword%>
+    volumes_from:
+     - ldapdata
 
 ldap:
     image: shasoco/openldap:2.4.40
@@ -35,3 +37,4 @@ ldapdata:
     command: echo ready
     volumes:
      - /var/lib/ldap/
+     - /etc/ldap

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "",
+    "doc": "jsdoc2md lib/*.js lib/*/*.js > api.md",
     "test": "eslint lib bin && mocha --bail",
     "coverage": "mocha --bail -R min && mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
   },
@@ -37,6 +38,7 @@
   "devDependencies": {
     "blanket": "^1.2.1",
     "coveralls": "^2.11.4",
+    "jsdoc-to-markdown": "^1.3.1",
     "mocha-lcov-reporter": "^1.0.0"
   },
   "config": {

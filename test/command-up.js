@@ -16,12 +16,14 @@ describe('Up', function() {
     });
 
     describe('#action()', function() {
-        var errorStub;
+        var errorStub,prepareStub;
         beforeEach(function() {
             errorStub = sinon.stub(up.mods.utils, 'error');
+            prepareStub = sinon.stub(up.mods.deploys, 'prepare');
         });
         afterEach(function() {
             errorStub.restore();
+            prepareStub.restore();
         });
 
         it('requires a <deploy-id> argument', function() {

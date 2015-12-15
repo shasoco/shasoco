@@ -44,15 +44,15 @@ wordpressmail:
     - DISABLE_SSL_VERIFICATION=1
   restart: always
 
-wordpressbackup:
-    image: aveltens/wordpress-backup
-    entrypoint: sh -c
-    command: echo ready
-    volumes_from:
-     - wordpressdata
-     - backup
-    links:
-     - wordpressdb:mysql
+#wordpressbackup:
+#    image: aveltens/wordpress-backup
+#    entrypoint: sh -c
+#    command: echo ready
+#    volumes_from:
+#     - wordpressdata
+#     - backup
+#    links:
+#     - wordpressdb:mysql
 
 wordpressdbdata:
   image: debian:jessie
