@@ -14,6 +14,7 @@ directory:
     environment:
      - "VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>"
      - SSL_CERT=<%-sslcert%>
+     - FORCE_SSL=YES
      - LDAP_ORGANIZATION=<%=domain%>
      - LDAP_DOMAIN=<%=domain%>
      - LDAP_PASSWORD=<%=rootpassword%>
