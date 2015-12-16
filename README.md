@@ -50,26 +50,28 @@ curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee
 ### First deployment
 
 1. shasoco create v0 fovea.cc
-1. shasoco prepare v0
 1. shasoco up v0
 1. shasoco activate v0
 
 ### Backup / Restore
 
+1. shasoco stop v0 *(if needed)*
 1. shasoco backup v0 mybackup
-1. shasoco backup list
 1. shasoco restore v0 v0/mybackup
+
+You can also restore to a new deploy:
+
+1. shasoco create v1 fovea.cc
+1. shasoco restore v1 v0/mybackup
 
 ### Upgrade
 
 1. shasoco deactivate
-1. shasoco backup v0 upgrade1
+1. shasoco backup v0 b4upgrade
 1. shasoco create v1 fovea.cc
-1. shasoco prepare v1 --no-pull
-1. shasoco up v1
-1. shasoco restore v1 v0/upgrade1
+1. shasoco restore v1 v0/b4upgrade
+1. shasoco up v1 *(TODO: deploy new version)*
 1. shasoco activate v1
-1. shasoco rm v0 --delay=10000
 
 ### Help
 
@@ -81,6 +83,6 @@ For the list of supported command line options:
 
 The `test` script uses vagrant to perform high-level integration tests on a fresh VM.
 
-    ./test
+    ./intest
 
 It'll build the image from the current working-tree.
