@@ -36,6 +36,10 @@ Service 3,4,5,6 use the LDAP server for authentication (same login/password for 
 
 A reverse proxy (nginx/haproxy) do the routing depending on the hostname.
 
+## Documententation
+
+This [step by step tutorial](https://fovea.cc/blog/index.php/gitlab-redmine-wordpress-openldap-in-5-minutes-or-so/) will get you started.
+
 ## Installation
 
 Shasoco's only requirement is to have latest version of docker installed on the host.
