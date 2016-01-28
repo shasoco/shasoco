@@ -77,6 +77,10 @@ You can also restore to a new deploy:
 1. shasoco up v1 *(TODO: deploy new version)*
 1. shasoco activate v1
 
+### Edit a deployment
+
+ * [Change the SSL certificate](https://github.com/shasoco/shasoco/issues/28)
+
 ### Help
 
 For the list of supported command line options:
