@@ -57,6 +57,14 @@ curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee
 1. shasoco up v0
 1. shasoco activate v0
 
+The **create** command generates a `config.yml` file in `/var/lib/shasoco/deploys/<id>`. This config file holds the settings for a particular deployment. It can be edited manually later if needed.
+
+The **up** command takes the `config.yml` file and generates a `docker-compose.yml` file, plus a few config files, from the settings. It then basically does `docker-compose up` to start all services.
+
+The **activate** command makes sure shasoco's top-level load-balancer sends traffic to the selected deployment. If any other deploy with the same domain name was active already, it will stop receiving traffic.
+
+*Advanced note:* `create` also creates a `vault` directory for the domain if needed...
+
 ### Backup / Restore
 
 1. shasoco stop v0 *(if needed)*
