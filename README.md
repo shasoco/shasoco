@@ -44,9 +44,20 @@ This [step by step tutorial](https://fovea.cc/blog/index.php/gitlab-redmine-word
 
 Shasoco's only requirement is to have latest version of docker installed on the host.
 
+### Release install
+
 To install `shasoco` globally, execute the below:
 ```
 curl https://raw.githubusercontent.com/shasoco/shasoco/master/shasoco | sudo tee /usr/local/bin/shasoco && sudo chmod +x /usr/local/bin/shasoco
+```
+
+### Install from GitHub
+
+```
+git clone https://github.com/shasoco/shasoco.git
+cd shasoco
+cp shasoco /usr/local/bin/shasoco
+./build-image
 ```
 
 ## Usage
