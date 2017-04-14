@@ -8,4 +8,4 @@ fi
 
 VERSION=`cat package.json|grep \"version\"|cut -d\" -f4`
 docker build -t shasoco/shasoco:latest .
-docker tag -f shasoco/shasoco:latest shasoco/shasoco:$VERSION
+docker tag shasoco/shasoco:latest shasoco/shasoco:$VERSION
