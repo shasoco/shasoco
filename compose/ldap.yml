@@ -11,6 +11,7 @@ directory:
     restart: always
     links:
      - ldap
+     - smtp
     environment:
      - "VIRTUAL_HOST=http://directory.<%=httpHost%>,https://directory.<%=httpsHost%>"
      - SSL_CERT=<%-sslcert%>
@@ -19,6 +20,19 @@ directory:
      - LDAP_DOMAIN=<%=domain%>
      - LDAP_PASSWORD=<%=rootpassword%>
      - FUSIONDIRECTORY_PASSWORD=<%=adminpassword%>
+
+     - SMTP_ENABLED=true
+     - SMTP_DOMAIN=<%=domain%>
+     - SMTP_HOST=smtp
+     - SMTP_PORT=25
+     - SMTP_AUTHENTICATION=plain
+     - SMTP_USER=mailer@<%=domain%>
+     - SMTP_PASS=<%=adminpassword%>
+     - SMTP_TLS=off
+     - SMTP_STARTTLS=off
+     - SMTP_TLSCERTCHECK=off
+     - SMTP_MAILDOMAIN=<%=domain%>
+
     volumes_from:
      - ldapdata
 
