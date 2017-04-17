@@ -6,7 +6,7 @@
 #
 
 directory:
-    image: shasoco/fusiondirectory:1.0.9.1
+    image: jeritiana/fusiondirectory:1.0.9.3
     hostname: directory.<%=domain%>
     restart: always
     links:
@@ -23,7 +23,7 @@ directory:
      - ldapdata
 
 ldap:
-    image: shasoco/openldap:2.4.40
+    image: jeritiana/openldap:2.4.40
     hostname: ldap.<%=domain%>
     restart: always
     volumes_from:
