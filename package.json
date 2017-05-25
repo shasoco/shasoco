@@ -10,7 +10,9 @@
     "build": "",
     "doc": "jsdoc2md lib/*.js lib/*/*.js > api.md",
     "test": "eslint lib bin && mocha --bail",
-    "coverage": "mocha --bail -R min && mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls"
+    "coverage": "mocha --bail -R min && mocha -r blanket -R html-cov > coverage.html && mocha --require blanket --reporter mocha-lcov-reporter | coveralls",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -33,7 +35,8 @@
     "progress": "^1.1.8",
     "ramda": "^0.18.0",
     "shelljs": "^0.5.3",
-    "sinon": "^1.17.2"
+    "sinon": "^1.17.2",
+    "snyk": "^1.30.1"
   },
   "devDependencies": {
     "blanket": "^1.2.1",
@@ -49,5 +52,6 @@
         "bin"
       ]
     }
-  }
+  },
+  "snyk": true
 }
